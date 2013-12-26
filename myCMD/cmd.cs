@@ -50,12 +50,12 @@ namespace myCMD
             switch(e.KeyCode) 
             {
                 case Keys.Down:
-                    Text.Remove(promptLastCharAt-1);
+                    Text = Text.Remove(promptLastCharAt-1);
                     Text += HistoryDown();
                     e.Handled = true;
                     break;
                 case Keys.Up:
-                    Text.Remove(promptLastCharAt-1);
+                    Text = Text.Remove(promptLastCharAt-1);
                     Text += HistoryUp();
                     e.Handled = true;
                     break;
