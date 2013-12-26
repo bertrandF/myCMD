@@ -34,6 +34,13 @@ namespace myCMD
         public MyCMD()
         {
             InitializeComponent();
+
+            this.tabControl1.TabPages.Add(new TabConsole("Console"));
+        }
+
+        private void addTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.tabControl1.TabPages.Add(new TabConsole("Console"));
         }
     }
 }
