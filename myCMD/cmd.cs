@@ -11,7 +11,7 @@ namespace myCMD
     class Cmd : RichTextBox
     {
         private List<string> cmdHisto = new List<string>();
-        private int historyPointer = -1;
+        private int historyPointer;
         public Prompt prompt = new Prompt();
         private int promptLastCharAt;
         public bool CursorIsAtStartOfLine 
@@ -42,6 +42,7 @@ namespace myCMD
             Text = prompt.Text;
             this.promptLastCharAt = Text.Length;
             this.SelectionStart = Text.Length;
+            ResetHistoryPointer();
 
         }
 
@@ -91,21 +92,31 @@ namespace myCMD
         }
 
         private void ResetHistoryPointer() {
-                historyPointer = cmdHisto.Count - 1;
+                historyPointer = cmdHisto.Count;
         }
 
         private string HistoryUp() 
         {
-            if (historyPointer < 0)
+            if (historyPointer > 0)
+                return cmdHisto[--historyPointer];
+            else 
+            {
+                if (historyPointer == 0) --historyPointer;
                 return "";
-            return cmdHisto[historyPointer--];
+            }
+             
         }
 
         private string HistoryDown() 
         {
-            if (historyPointer >= cmdHisto.Count)
+            if (historyPointer < cmdHisto.Count - 1)
+                return cmdHisto[++historyPointer];
+            else 
+            {
+                if (historyPointer == cmdHisto.Count - 1) ++historyPointer;
                 return "";
-            return cmdHisto[historyPointer++];
+            }
+            
         }
     }
 }
