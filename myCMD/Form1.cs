@@ -42,5 +42,10 @@ namespace myCMD
         {
             this.tabControl1.TabPages.Add(new TabConsole("Console"));
         }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
