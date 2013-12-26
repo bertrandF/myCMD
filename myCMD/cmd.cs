@@ -10,6 +10,7 @@ namespace myCMD
 {
     class Cmd : RichTextBox
     {
+        public Prompt prompt = new Prompt();
         public bool CursorIsAtStartOfLine 
         { 
             get 
@@ -55,7 +56,7 @@ namespace myCMD
                     break;
                 case Keys.Enter:
                     MessageBox.Show("Executing cmd : " + this.Lines[this.Lines.Length - 1]);
-                    Text += "\r\n";
+                    Text += "\r\n" + prompt.Text;
                     this.SelectionStart = Text.Length;
                     e.Handled = true;
                     break;

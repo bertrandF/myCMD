@@ -36,7 +36,7 @@ namespace myCMD
                             result.Append(DateTime.Now.ToString("yyyy"));
                             break;
                         case 'u':
-                            result.Append(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+                            result.Append(System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1]);
                             break;
                         case 'c':
                             result.Append(System.Environment.MachineName);
@@ -56,7 +56,7 @@ namespace myCMD
 
         public Prompt() 
         {
-            this.Text = "[D/M/Y h:m:s]u@c >>";
+            this.Text = "[D/M/Y h:m:s]\nu@c >> ";
         }
 
         public Prompt(string text) 
