@@ -11,11 +11,12 @@ namespace myCMD
     class Cmd : RichTextBox
     {
         public Prompt prompt = new Prompt();
+        private Int64 promptLastCharAt;
         public bool CursorIsAtStartOfLine 
         { 
             get 
             {
-                if (SelectionStart == Text.Length - Lines[Lines.Length - 1].Length)
+                if (SelectionStart == promptLastCharAt)
                     return true;
                 return false;
             } 
@@ -35,6 +36,11 @@ namespace myCMD
             this.ForeColor = Color.DarkGray;
             this.Font = new Font("windows_command_prompt.ttf", 10);
             this.Dock = DockStyle.Fill;
+
+            Text = prompt.Text;
+            this.promptLastCharAt = Text.Length;
+            this.SelectionStart = Text.Length;
+
         }
 
         protected override void OnKeyDown(KeyEventArgs e) 
@@ -57,6 +63,7 @@ namespace myCMD
                 case Keys.Enter:
                     MessageBox.Show("Executing cmd : " + this.Lines[this.Lines.Length - 1]);
                     Text += "\r\n" + prompt.Text;
+                    this.promptLastCharAt = Text.Length;
                     this.SelectionStart = Text.Length;
                     e.Handled = true;
                     break;
