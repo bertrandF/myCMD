@@ -73,14 +73,13 @@ namespace myCMD
                     MessageBox.Show("Executing cmd : " + cmd);
                     Text += "\r\n" + prompt.Text;
                     this.promptLastCharAt = Text.Length;
-                    this.SelectionStart = Text.Length;
                     e.Handled = true;
                     ResetHistoryPointer();
                     break;
                 default:
                     break;
             }
-
+            this.SelectionStart = Text.Length;
             base.OnKeyDown(e);
         }
 
