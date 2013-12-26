@@ -10,8 +10,10 @@ namespace myCMD
 {
     class Cmd : RichTextBox
     {
+        private List<string> cmdHisto = new List<string>();
+        private int historyPointer = -1;
         public Prompt prompt = new Prompt();
-        private Int64 promptLastCharAt;
+        private int promptLastCharAt;
         public bool CursorIsAtStartOfLine 
         { 
             get 
@@ -48,8 +50,13 @@ namespace myCMD
             switch(e.KeyCode) 
             {
                 case Keys.Down:
+                    Text.Remove(promptLastCharAt-1);
+                    Text += HistoryDown();
+                    e.Handled = true;
+                    break;
                 case Keys.Up:
-                    // TODO: Historique !
+                    Text.Remove(promptLastCharAt-1);
+                    Text += HistoryUp();
                     e.Handled = true;
                     break;
                 case Keys.Left:
@@ -61,11 +68,14 @@ namespace myCMD
                         e.Handled = true;
                     break;
                 case Keys.Enter:
-                    MessageBox.Show("Executing cmd : " + this.Lines[this.Lines.Length - 1]);
+                    string cmd = Text.Substring(promptLastCharAt);
+                    cmdHisto.Add(cmd);
+                    MessageBox.Show("Executing cmd : " + cmd);
                     Text += "\r\n" + prompt.Text;
                     this.promptLastCharAt = Text.Length;
                     this.SelectionStart = Text.Length;
                     e.Handled = true;
+                    ResetHistoryPointer();
                     break;
                 default:
                     break;
@@ -74,6 +84,22 @@ namespace myCMD
             base.OnKeyDown(e);
         }
 
+        private void ResetHistoryPointer() {
+                historyPointer = cmdHisto.Count - 1;
+        }
 
+        private string HistoryUp() 
+        {
+            if (historyPointer < 0)
+                return "";
+            return cmdHisto[historyPointer--];
+        }
+
+        private string HistoryDown() 
+        {
+            if (historyPointer >= cmdHisto.Count)
+                return "";
+            return cmdHisto[historyPointer++];
+        }
     }
 }
