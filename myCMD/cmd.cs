@@ -50,12 +50,12 @@ namespace myCMD
             switch(e.KeyCode) 
             {
                 case Keys.Down:
-                    Text = Text.Remove(promptLastCharAt-1);
+                    DeleteCurrentCommandLine();
                     Text += HistoryDown();
                     e.Handled = true;
                     break;
                 case Keys.Up:
-                    Text = Text.Remove(promptLastCharAt-1);
+                    DeleteCurrentCommandLine();
                     Text += HistoryUp();
                     e.Handled = true;
                     break;
@@ -81,6 +81,13 @@ namespace myCMD
             }
             this.SelectionStart = Text.Length;
             base.OnKeyDown(e);
+        }
+
+        private void DeleteCurrentCommandLine() {
+            if (SelectionStart != promptLastCharAt)
+            {
+                Text = Text.Remove(promptLastCharAt);
+            }
         }
 
         private void ResetHistoryPointer() {
